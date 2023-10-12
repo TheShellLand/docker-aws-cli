@@ -3,7 +3,7 @@ FROM ubuntu:latest
 # install
 RUN apt update && \
     apt upgrade -y && \
-    apt install -y curl gpg sudo systemd unzip groff mandoc
+    apt install -y curl gpg sudo systemd unzip groff mandoc less
 
 RUN if dpkg --print-architecture | grep arm64 ; then curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install; fi
 RUN if dpkg --print-architecture | grep amd64 ; then curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install; fi

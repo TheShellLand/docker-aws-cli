@@ -2,6 +2,16 @@
 
 Run AWS cli in docker
 
+## Login
+
+```shell
+# access key and token
+/bin/bash aws configure
+
+# sso
+/bin/bash aws configure sso
+```
+
 ## Install and run on docker
 
 ```shell
