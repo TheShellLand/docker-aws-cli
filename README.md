@@ -13,7 +13,7 @@ Run AWS cli in docker
 ```
 
 ```shell
-/bin/bash run.sh
+/bin/bash aws
 ```
 
 ## Arguments

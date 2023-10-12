@@ -4,4 +4,7 @@
 
 cd $(dirname $0); set -xe
 
-docker run --rm -it aws-cli:latest $@
+bash build.sh
+
+docker volume create aws-cli
+docker run --rm -it -v aws-cli:/root/.aws/ --name aws-cli aws-cli:latest $@
