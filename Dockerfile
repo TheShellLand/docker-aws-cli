@@ -17,4 +17,8 @@ RUN session-manager-plugin
 
 COPY entry.sh /entry.sh
 
+# config
+# ~/.aws/config
+VOLUME /root/.aws/
+
 ENTRYPOINT ["/bin/bash", "/entry.sh"]
