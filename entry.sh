@@ -27,4 +27,6 @@ find /root/.aws -type f
 #    --interactive \
 #    --command "/bin/bash"
 
+#bash <( curl -Ls https://raw.githubusercontent.com/aws-containers/amazon-ecs-exec-checker/main/check-ecs-exec.sh ) $cluster $task
+
 aws $@
