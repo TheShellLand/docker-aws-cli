@@ -15,7 +15,7 @@ exit 0
 
 aws ecs describe-tasks \
     --cluster $cluster \
-    --tasks $task
+    --tasks $task | grep enableExecuteCommand
 
 aws ecs update-service \
   --cluster $cluster \
