@@ -4,7 +4,29 @@
 
 cd $(dirname $0); set -xe
 
+bash build.sh
+
 #docker volume rm aws-cli
 docker volume create aws-cli
 docker rm -f aws-cli || true
 docker run --rm -it --env-file env.sh -v aws-cli:/root/.aws/ --name aws-cli aws-cli:latest $@
+
+exit 0
+
+aws ecs describe-tasks \
+    --cluster $cluster \
+    --tasks $task
+
+aws ecs update-service \
+  --cluster $cluster \
+  --service $service \
+  --task-definition $task_definition \
+  --force-new-deployment \
+  --enable-execute-command
+
+aws ecs execute-command \
+    --cluster $cluster \
+    --task $task \
+    --container $container \
+    --interactive \
+    --command "/bin/bash"
