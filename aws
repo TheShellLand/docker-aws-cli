@@ -4,7 +4,7 @@
 
 cd $(dirname $0); set -xe
 
-bash build.sh
+bash build.sh >/dev/null 2>&1
 
 #docker volume rm aws-cli
 docker volume create aws-cli
@@ -13,10 +13,16 @@ docker run --rm -it --env-file env.sh -v aws-cli:/root/.aws/ --name aws-cli aws-
 
 exit 0
 
+# describe clusters
+aws ecs describe-clusters \
+    --cluster $cluster     
+
+# describe task
 aws ecs describe-tasks \
     --cluster $cluster \
     --tasks $task | grep enableExecuteCommand
 
+# enable container exec
 aws ecs update-service \
   --cluster $cluster \
   --service $service \
@@ -24,6 +30,7 @@ aws ecs update-service \
   --force-new-deployment \
   --enable-execute-command
 
+# disable container exec
 aws ecs update-service \
   --cluster $cluster \
   --service $service \
@@ -31,6 +38,7 @@ aws ecs update-service \
   --force-new-deployment \
   --disable-execute-command
 
+# container exec
 aws ecs execute-command \
     --cluster $cluster \
     --task $task \
@@ -38,4 +46,5 @@ aws ecs execute-command \
     --interactive \
     --command "/bin/bash"
 
+# exec checker
 bash <( curl -Ls https://raw.githubusercontent.com/aws-containers/amazon-ecs-exec-checker/main/check-ecs-exec.sh ) $cluster $task
