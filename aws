@@ -4,7 +4,7 @@
 
 cd $(dirname $0); set -xe
 
-bash build.sh >/dev/null 2>&1
+#bash build.sh >/dev/null 2>&1
 
 #docker volume rm aws-cli
 docker volume create aws-cli
@@ -46,5 +46,23 @@ aws ecs execute-command \
     --interactive \
     --command "/bin/bash"
 
+# enable and exec
+source env.sh; bash aws ecs update-service \
+  --cluster $cluster \
+  --service $service \
+  --task-definition $task_definition \
+  --force-new-deployment \
+  --enable-execute-command \
+  && bash aws ecs execute-command \
+    --cluster $cluster \
+    --task $task \
+    --container $container \
+    --interactive \
+    --command "/bin/bash"
+
 # exec checker
 bash <( curl -Ls https://raw.githubusercontent.com/aws-containers/amazon-ecs-exec-checker/main/check-ecs-exec.sh ) $cluster $task
+
+# django sqlsequencereset
+apt update && apt install -y postgresql-client
+python manage.py sqlsequencereset fcm_django | python manage.py dbshell
