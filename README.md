@@ -23,6 +23,7 @@ Run AWS cli in docker
 ```
 
 ```shell
+/bin/bash export-vars.sh
 /bin/bash aws
 ```
 
