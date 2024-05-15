@@ -14,7 +14,7 @@ env:
   REGISTRY: ghcr.io
   # github.repository as <account>/<repo>
   #IMAGE_NAME: ${{ github.repository }}
-  IMAGE_NAME: buy-nothing-project/aws-cli
+  IMAGE_NAME: theshellland/aws-cli
 
 
 jobs:
