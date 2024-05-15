@@ -66,3 +66,7 @@ bash <( curl -Ls https://raw.githubusercontent.com/aws-containers/amazon-ecs-exe
 # django sqlsequencereset
 apt update && apt install -y postgresql-client
 python manage.py sqlsequencereset fcm_django | python manage.py dbshell
+
+# reboot aws rds
+aws rds reboot-db-instance \
+    --db-instance-identifier db_instance_identifier
