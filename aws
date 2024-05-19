@@ -73,7 +73,7 @@ aws rds reboot-db-instance \
 
 # get rsa info
 aws rds describe-db-instances \
-    --db-instance-identifier $db_instance_identifier
+    --db-instance-identifier $db_instance_identifier | grep DBInstanceStatus
 
 # get rds status
 aws rds describe-db-instances \
